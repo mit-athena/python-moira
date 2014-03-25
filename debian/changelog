@@ -1,3 +1,10 @@
+python-moira (4.3.1-0debathena1) UNRELEASED; urgency=low
+
+  * Release proper Debathena versions
+  * Bump upstream version
+
+ -- Victor Vasiliev <vasilvv@mit.edu>  Mon, 24 Mar 2014 20:10:13 -0400
+
 python-moira (4.3.0-2) unstable; urgency=low
 
   * Add missing build-dependency on debathena-libmrclient-dev.
