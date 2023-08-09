@@ -135,8 +135,6 @@ def query(handle, *args, **kwargs):
     the function.
     """
     if handle.startswith('_'):
-        # TODO: why are we converting twice?
-        # perhaps if we don't, we wouldn't need this extra function
         args_converted = (_to_bytes(arg) for arg in args)
         return _list_query(handle, *args_converted)
     else:
