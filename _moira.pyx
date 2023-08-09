@@ -35,7 +35,7 @@ class MoiraException(Exception):
 __connected = False
 
 def _error(code):
-    raise MoiraException, (code, error_message(code))
+    raise MoiraException((code, error_message(code)))
 
 def connect(server=''):
     """
@@ -86,9 +86,9 @@ def auth(program, krb4=False):
     discouraged
     """
     if krb4:
-        status = mr_auth(program)
+        status = mr_auth(program.encode())
     else:
-        status = mr_krb5_auth(program)
+        status = mr_krb5_auth(program.encode())
     if status != MR_SUCCESS:
         _error(status)
 
