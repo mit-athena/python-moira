@@ -135,8 +135,7 @@ def query(handle, *args, **kwargs):
     the function.
     """
     if handle.startswith('_'):
-        args_converted = (_to_bytes(arg) for arg in args)
-        return _list_query(handle, *args_converted)
+        return _list_query(handle, *args)
     else:
         fmt = kwargs.pop('fmt', dict)
 
