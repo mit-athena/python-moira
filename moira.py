@@ -29,8 +29,7 @@ def _to_bytes(s):
     """
     if isinstance(s, str):
         return s.encode()
-    else:
-        return s
+    return s
 
 
 def _clear_caches():
