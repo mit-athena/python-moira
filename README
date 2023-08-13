@@ -2,18 +2,18 @@
 Installing PyMoira
 ==================
 
-To install PyMoira, you will first need to install Pyrex_. It's always
+To install PyMoira, you will first need to install Cython. It's always
 a good idea to install Pyrex through your package manager, if
-possible. Your system's Pyrex package may be named ``python-pyrex`` or
-``pyrex-py25``. If your package manager doesn't have a package for
+possible. Your system's Pyrex package may be named ``python3-Cython`` or
+``cython3``. If your package manager doesn't have a package for
 Pyrex, or if you wish to install Pyrex by hand anyway, you can do so
 by running::
 
-  $ easy_install Pyrex
+  $ pip install Cython
 
 Once you've done that, to install PyMoira globally, run::
 
-  $ python setup.py install
+  $ pip install .
 
 If you want to build PyMoira without installing it globally, you may
 want to run::
@@ -26,6 +26,8 @@ working directory is the root of the PyMoira source tree.
 
 Alternatively, PyMoira has been packaged for Debian and Ubuntu. To
 build the Debian package of the latest release, run::
+
+_(NOTE: deb generation is untested)_
 
   $ git checkout debian
   $ git buildpackage

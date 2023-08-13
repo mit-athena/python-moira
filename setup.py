@@ -2,7 +2,7 @@
 
 from setuptools import setup
 from distutils.extension import Extension
-from Pyrex.Distutils import build_ext
+from Cython.Distutils import build_ext
 
 setup(
     name="PyMoira",
