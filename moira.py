@@ -23,6 +23,15 @@ _return_cache = {}
 _et_cache = {}
 
 
+def _to_bytes(s):
+    """
+    If given a string, converts it to bytes, otherwise returns it as is
+    """
+    if isinstance(s, str):
+        return s.encode()
+    return s
+
+
 def _clear_caches():
     """Clear query caches.
 
@@ -34,7 +43,7 @@ def _clear_caches():
 
 
 def connect(server=''):
-    _moira.connect(server)
+    _moira.connect(_to_bytes(server))
     version(-1)
 connect.__doc__ = _moira.connect.__doc__
 
@@ -74,8 +83,18 @@ def _list_query(handle, *args):
     This bypasses the tuple -> dict conversion done in moira.query()
     """
     results = []
-    _moira._query(handle, results.append, *args)
-    return results
+
+    # Python 3 wants bytes
+    args_converted = (_to_bytes(arg) for arg in args)
+
+    # Perform the query
+    _moira._query(_to_bytes(handle), results.append, *args_converted)
+
+    # We get bytes back, convert back to string
+    return [
+        tuple(val.decode() for val in result)
+        for result in results
+    ]
 
 
 def _parse_args(handle, args, kwargs):
@@ -99,7 +118,7 @@ def _parse_args(handle, args, kwargs):
         return tuple(kwargs.get(i, '*')
                      for i in _arg_cache[handle])
     else:
-        return args
+        return tuple(_to_bytes(arg) for arg in args)
 
 
 def query(handle, *args, **kwargs):
@@ -126,7 +145,7 @@ def query(handle, *args, **kwargs):
         results = []
 
         for r in plain_results:
-            results.append(fmt(zip(_return_cache[handle], r)))
+            results.append(fmt(list(zip(_return_cache[handle], r))))
 
         return results
 
@@ -147,9 +166,9 @@ def access(handle, *args, **kwargs):
     args = _parse_args(handle, args, kwargs)
 
     try:
-        _moira._access(handle, *args)
+        _moira._access(_to_bytes(handle), *args)
         return True
-    except MoiraException, e:
+    except MoiraException as e:
         if e.code != errors()['MR_PERM']:
             raise
         return False

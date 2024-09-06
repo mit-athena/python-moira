@@ -53,8 +53,8 @@ def main():
         moira.auth(options.program)
 
     if args[0].startswith('_'):
-        print '\n'.join(', '.join(x) for x in
-                        moira._list_query(*args))
+        print('\n'.join(', '.join(x) for x in
+                        moira._list_query(*args)))
     else:
         results = moira.query(fmt=tuple, *args)
 
@@ -63,11 +63,11 @@ def main():
             r = filter_fields(r, options.fields)
 
             if options.single:
-                print ', '.join(v for (k, v) in r)
+                print(', '.join(v for (k, v) in r))
             else:
                 for k, v in r:
-                    print '%-*s: %s' % (keylen, k, v)
-                print
+                    print('%-*s: %s' % (keylen, k, v))
+                print()
 
 if __name__ == '__main__':
     main()
